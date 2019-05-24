@@ -37,7 +37,24 @@ traversalPath = []
 graph = {0: {"n": "?", "s": "?", "e": "?", "w": "?"}}
 opposite = {"n": "s", "s": "n", "e": "w", "w": "e"} # Sets opposite direction for player if they must backtrack
 
-
+def bfs(vertex_id):
+    q = Queue()
+    q.enqueue([vertex_id])
+    visited = set()
+    while q.size() > 0:
+        path = q.dequeue()
+        x = path[-1]
+        if x not in visited:
+            for exit in graph[x]:
+                if graph[x][exit] == "?":
+                    return path
+            visited.add(x)
+            for exit_direction in graph[x]:
+                new_path = list(path)
+                new_path.append(graph[x][exit_direction])
+                q.enqueue(new_path)
+    return None
+    
 # TRAVERSAL TEST
 visited_rooms = set()
 player.currentRoom = world.startingRoom

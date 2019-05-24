@@ -64,6 +64,32 @@ def path(path):
                 directions.append(exit)
     return directions
 
+while True:
+    currentRoom = graph[player.currentRoom.id]
+    unexplored_rooms = []
+    for direction in currentRoom:
+        if currentRoom[direction] == "?":
+            unexplored_rooms.append(direction)
+    if len(unexplored_rooms) > 0:
+        firstExit = unexplored_rooms[0]
+        traversalPath.append(firstExit)
+        prev_room = player.currentRoom.id
+        player.travel(firstExit)
+        exitDict = {}
+        if player.currentRoom.id not in graph:
+            for exit in player.currentRoom.getExits():
+                exitDict[exit] = "?"
+            graph[player.currentRoom.id] = exitDict
+        graph[prev_room][firstExit] = player.currentRoom.id
+        graph[player.currentRoom.id][opposite[firstExit]] = prev_room
+    else:
+        paths_unexplored = bfs(player.currentRoom.id)
+        if paths_unexplored is None:
+            break
+        for direction in path(paths_unexplored):
+            player.travel(direction)
+            traversalPath.append(direction)
+
 # TRAVERSAL TEST
 visited_rooms = set()
 player.currentRoom = world.startingRoom

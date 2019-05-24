@@ -54,7 +54,16 @@ def bfs(vertex_id):
                 new_path.append(graph[x][exit_direction])
                 q.enqueue(new_path)
     return None
-    
+
+def path(path):
+    current_room = path[0]
+    directions = []
+    for room in path[1:]:
+        for exit in graph[current_room]:
+            if room == graph[current_room][exit]:
+                directions.append(exit)
+    return directions
+
 # TRAVERSAL TEST
 visited_rooms = set()
 player.currentRoom = world.startingRoom

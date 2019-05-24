@@ -33,7 +33,9 @@ class Queue():
         return len(self.queue)
 
 # FILL THIS IN
-traversalPath = ['n', 's']
+traversalPath = []
+graph = {0: {"n": "?", "s": "?", "e": "?", "w": "?"}}
+opposite = {"n": "s", "s": "n", "e": "w", "w": "e"} # Sets opposite direction for player if they must backtrack
 
 
 # TRAVERSAL TEST
